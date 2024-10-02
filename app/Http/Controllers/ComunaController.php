@@ -10,12 +10,17 @@ class ComunaController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * 
+     *  @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $comunas = Comuna::all();
-        return view('comuna.index',['comunas'=>$comunas]);
+        //
+        //$comunas = Comuna::all();
+        $comunas = Comuna::join('tb_municipio', 'tb_comuna.muni_codi', '=', 'tb_municipio.muni_codi')
+            ->select('tb_comuna.*', 'tb_municipio.muni_nomb')
+            ->get();
+
+        return view('comuna.index', ['comunas' => $comunas]);
     }
 
     /**
