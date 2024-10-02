@@ -25,18 +25,28 @@ class ComunaController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        $municipios = DB::table('tb_municipio')
+        ->orderBy('muni_nomb')
+        ->get();
+        return view('comuna.new',['municipios=>$municipios']);
     }
 
     /**
      * Store a newly created resource in storage.
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $comuna = new Comuna();
+        // $comuna->comu_codi = $request->id;
+        // El codigo de comuna es auto incremental
+        
     }
 
     /**
