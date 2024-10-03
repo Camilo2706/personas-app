@@ -35,6 +35,7 @@
              <option selected value="{{$municipio->muni_codi}}">{{$municipio->muni_nomb}}</option>
          @else
              <option value="{{$municipio->muni_codi}}">{{$municipio->muni_nomb}}</option>
+             @endif
     @endforeach
 </select>
   <div class="mt-3">
