@@ -26,7 +26,10 @@ class MunicipioController extends Controller
      */
     public function create()
     {
-        //
+        $departamentos = DB::table('tb_departamento')
+        ->orderBy('depa_nomb')
+        ->get();
+    return view('municipios.new', ['departamentos' => $departamentos]);
     }
 
     /**
@@ -62,7 +65,12 @@ class MunicipioController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $municipio = Municipio::find($id);
+        $departamentos = DB::table('tb_departamento')
+            ->orderBy('depa_nomb')
+            ->get();
+
+        return view('municipios.edit', ['municipio' => $municipio, 'departamentos' => $departamentos]);
     }
 
     /**
@@ -86,10 +94,22 @@ class MunicipioController extends Controller
     }
 
     /**
+     * 
+     * @param string $id
+     * @return \Illuminate\Http\Response
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $municipio = Municipio::find($id);
+        $municipio->delete();
+
+        
+        $municipios = DB::table('tb_municipio')
+            ->join('tb_departamento', 'tb_municipio.depa_codi', '=', 'tb_departamento.depa_codi')
+            ->select('tb_municipio.*', 'tb_departamento.depa_nomb')
+            ->get();
+
+        return view('municipios.index', ['municipios' => $municipios]);
     }
 }
