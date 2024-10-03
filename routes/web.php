@@ -8,6 +8,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-route::get('/comunas',[ComunaController::class, 'index'])->name('comunas.index');
+route::get('/comunas',[ComunaController::class, 'index'])->name('comuna.index');
 route::post('/comunas',[ComunaController::class, 'store'])->name('comunas.store');
-route::get('/comunas/create',[ComunaCtroller::class,'create'])->name('comunas.create');
+route::get('/comunas/create',[ComunaController::class,'create'])->name('comunas.create');
+Route::delete('/comunas/{comuna}',[ComunaController::class,'destroy'])->name('comunas.destroy');

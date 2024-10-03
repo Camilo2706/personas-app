@@ -16,7 +16,8 @@ class ComunaController extends Controller
     {
         //
         //$comunas = Comuna::all();
-        $comunas = Comuna::join('tb_municipio', 'tb_comuna.muni_codi', '=', 'tb_municipio.muni_codi')
+        $comunas = DB::table('tb_comuna')
+            ->join('tb_municipio', 'tb_comuna.muni_codi', '=', 'tb_municipio.muni_codi')
             ->select('tb_comuna.*', 'tb_municipio.muni_nomb')
             ->get();
 
@@ -32,7 +33,7 @@ class ComunaController extends Controller
         $municipios = DB::table('tb_municipio')
         ->orderBy('muni_nomb')
         ->get();
-        return view('comuna.new',['municipios=>$municipios']);
+        return view('comuna.new',['municipios'=>$municipios]);
     }
 
     /**
@@ -43,12 +44,12 @@ class ComunaController extends Controller
      */
     public function store(Request $request)
     {
-        $comuna = new Comuna();
+        $comunas = new Comuna();
         // $comuna->comu_codi = $request->id;
         // El codigo de comuna es auto incremental
-        $comuna->comu_nomb = $request->name;
-        $comuna->muni_codi = $request->code;
-        $comuna->save();
+        $comunas->comu_nomb = $request->name;
+        $comunas->muni_codi = $request->code;
+        $comunas->save();
 
         $comunas = DB::table('tb_comuna')
         ->join('tb_municipio','tb_comuna.muni_codi','=','tb_municipio.muni_codi')
