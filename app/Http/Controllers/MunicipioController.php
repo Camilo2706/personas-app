@@ -69,8 +69,8 @@ class MunicipioController extends Controller
         $departamentos = DB::table('tb_departamento')
             ->orderBy('depa_nomb')
             ->get();
-
-        return view('municipios.edit', ['municipio' => $municipio, 'departamentos' => $departamentos]);
+    
+        return view('municipio.edit', ['municipio' => $municipio, 'departamentos' => $departamentos]);
     }
 
     /**

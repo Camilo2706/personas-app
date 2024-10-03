@@ -1,42 +1,61 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
     <title>Listado de Municipios</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <h1>Listado de Municipios</h1>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Nombre</th>
-                    <th>Departamento</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($municipios as $municipio)
-                    <tr>
-                        <td>{{ $municipio->muni_codi }}</td>
-                        <td>{{ $municipio->muni_nomb }}</td>
-                        <td>{{ $municipio->depa_nomb }}</td>
-                        <td>
-                            <a href="{{ route('municipios.edit', $municipio->muni_codi) }}" class="btn btn-warning">Editar</a>
-                            <form action="{{ route('municipios.destroy', $municipio->muni_codi) }}" method="POST" style="display:inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-        <a href="{{ route('municipios.create') }}" class="btn btn-primary">Agregar Municipio</a>
-    </div>
-</body>
+  </head>
+
+  <body>
+  <div class="container">
+    <h1>Municipio list</h1>
+    <a href="{{ route('municipios.create') }}" class="btn btn-success">Add Municipio</a>
+    <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Code</th>
+      <th scope="col">Municipio</th>
+      <th scope="col">Department</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+      @foreach ($municipios as $municipio)
+    <tr>
+      <th scope="row">{{ $municipio->muni_codi }}</th>
+      <td>{{ $municipio->muni_nomb }}</td>
+      <td>{{ $municipio->depa_nomb }}</td>
+      <td>
+     <a href="{{route('municipios.edit',['municipio'=>$municipio->muni_codi]) }}"
+     class ="btn btn-info"> Edit </a></li> 
+     
+      <form action = "{{ route ('municipios.destroy',['municipio' => $municipio->muni_codi]) }}"
+      method = 'POST' style="display: inline-block">
+
+      @method ('delete')
+      @csrf
+      <input class="btn btn-danger" type="submit" value="Delete">
+      </form>
+    
+    </td>
+    </tr>
+    @endforeach
+    </tbody>
+  </table>
+</div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+
+  </body>
 </html>
