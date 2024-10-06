@@ -28,7 +28,13 @@ class PaisController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $pais = new Pais();
+        $pais->pais_codi = $request->pais_codi;
+        $pais->pais_nomb = $request->pais_nomb;
+        $pais->pais_capi = $request->pais_capi;
+        $pais->save();
+    
+        return redirect()->route('paises.index');
     }
 
     /**
@@ -52,7 +58,12 @@ class PaisController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $pais = Pais::find($id);
+        $pais->pais_nomb = $request->pais_nomb;
+        $pais->pais_capi = $request->pais_capi;
+        $pais->save();
+    
+        return redirect()->route('paises.index');
     }
 
     /**
