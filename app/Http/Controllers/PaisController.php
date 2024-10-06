@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pais;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class PaisController extends Controller
@@ -20,7 +22,10 @@ class PaisController extends Controller
      */
     public function create()
     {
-        //
+        $paises = DB::table('tb_pais')
+        ->orderBy('pais_nomb')
+        ->get();
+    return view('paises.new', ['paises' => $paises]);
     }
 
     /**
@@ -50,7 +55,8 @@ class PaisController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $pais = Pais::find($id);
+         return view('paises.edit', ['pais' => $pais]);
     }
 
     /**
@@ -71,6 +77,9 @@ class PaisController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $pais = Pais::find($id);
+        $pais->delete();
+    
+        return redirect()->route('paises.index');
     }
 }
