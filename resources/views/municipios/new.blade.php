@@ -11,36 +11,34 @@
     <title>Add Municipio</title>
   </head>
   <body>
-    <div class= "container">
-    <h1>Add Municipio</h1>
-    <form method="POST" action = "{{ route('municipios.store') }}">
-    @csrf
+    <div class="container">
+      <h1>Add Municipio</h1>
+      <form method="POST" action="{{ route('municipios.store') }}">
+        @csrf
 
-    <div class="mb-3">
-      <label for="muni_codi" class="form-label">Code</label>
-      <input type="text" class="form-control" id="muni_codi" name="muni_codi" aria-describedby="codeHelp">
-      <div id="codeHelp" class="form-text">Municipio Code</div>
+        <div class="mb-3">
+          <label for="muni_codi" class="form-label">Code</label>
+          <input type="text" class="form-control" id="muni_codi" name="muni_codi" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="muni_nomb" class="form-label">Municipio</label>
+          <input type="text" class="form-control" id="muni_nomb" name="muni_nomb" placeholder="Municipio name" required>
+        </div>
+
+        <label for="depa_codi">Department:</label>
+        <select class="form-select" id="depa_codi" name="depa_codi" required>
+          <option selected disabled value="">Choose one...</option>
+          @foreach ($departamentos as $departamento)
+            <option value="{{ $departamento->depa_codi }}">{{ $departamento->depa_nomb }}</option>
+          @endforeach
+        </select>
+
+        <div class="mt-3">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <a href="{{ route('municipios.index') }}" class="btn btn-warning">Cancel</a>
+        </div>
+      </form>
     </div>
-    
-    <div class="mb-3">
-      <label for="name" class="form-label">Municipio</label>
-      <input type="text" class="form-control" id="name" name="muni_nomb" placeholder="Municipio Name">
-    </div>
-
-    <label for="department">Department:</label>
-    <select class="form-select" id="department" name="depa_codi" required>
-      <option selected disabled value="">Choose one...</option>
-      @foreach ($departamentos as $departamento)
-        <option value="{{$departamento->depa_codi}}">{{$departamento->depa_nomb}}</option>
-      @endforeach
-    </select>
-
-    <div class="mt-3">
-      <button type="submit" class="btn btn-primary">Save</button>
-      <a href="{{ route('municipios.index') }}" class="btn btn-warning">Cancel</a>
-    </div>
-    </form>
-
-  </div>
   </body>
 </html>
