@@ -44,19 +44,11 @@ class ComunaController extends Controller
      */
     public function store(Request $request)
     {
-        $comunas = new Comuna();
-        // $comuna->comu_codi = $request->id;
-        // El codigo de comuna es auto incremental
-        $comunas->comu_nomb = $request->name;
-        $comunas->muni_codi = $request->code;
-        $comunas->save();
-
-        $comunas = DB::table('tb_comuna')
-        ->join('tb_municipio','tb_comuna.muni_codi','=','tb_municipio.muni_codi')
-        ->select('tb_comuna.*',"tb_municipio.muni_nomb")
-        ->get();
-
-        return view('comuna.index',['comunas => $comunas']);
+        $comuna = new Comuna();
+        $comuna->comu_nomb = $request->comu_nomb;
+        $comuna->muni_codi = $request->muni_codi;
+        $comuna->save();
+        return json_encode(['comuna' => $comuna]);
 
 
     }
@@ -66,7 +58,12 @@ class ComunaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $comuna = Comuna::find($id);
+    $municipios = DB::table('tb_municipio')
+        ->orderBy('muni_nomb')
+        ->get();
+    
+    return json_encode(['comuna' => $comuna, 'municipios' => $municipios]);
     }
 
     /**
@@ -88,17 +85,10 @@ class ComunaController extends Controller
     public function update(Request $request, string $id)
     {
         $comuna = Comuna::find($id);
-
-        $comuna->comu_nomb = $request->name;
-        $comuna->muni_codi = $request->code;
-        $comuna->save();
-
-        $comunas = DB:: table('tb_comuna')
-        ->join('tb_municipio','tb_comuna.muni_codi','=','tb_municipio.muni_codi')
-        ->select('tb_comuna.*',"tb_municipio.muni_nomb")
-        ->get();
-
-        return view('comuna.index',['comunas => $comunas']);
+    $comuna->comu_nomb = $request->comu_nomb;
+    $comuna->muni_codi = $request->muni_codi;
+    $comuna->save();
+    return json_encode(['comuna' => $comuna]);
     }
 
     /**
@@ -108,14 +98,12 @@ class ComunaController extends Controller
      */
     public function destroy(string $id)
     {
-        $comuna = Comuna::find(id);
-        $comuna->delete();
-
-        $comunas = DB::table('tb_comuna')
-        ->join('tb_municipio','tb_comuna.muni_codi','=','tb_municipio.muni_codi')
-        ->select('tb_comuna.*',"tb_municipio.muni_nomb")
+        $comuna = Comuna::find($id);
+    $comuna->delete();
+    $comunas = DB::table('tb_comuna')
+        ->join('tb_municipio', 'tb_comuna.muni_codi', '=', 'tb_municipio.muni_codi')
+        ->select('tb_comuna.*', 'tb_municipio.muni_nomb')
         ->get();
-
-        return view('comuna.index',['comunas'=>$comunas]);
+    return json_encode(['comunas'=>$comunas, 'success'=> true]);
     }
 }
